@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Father 1 AI ULTIMATE</title>
+<style>body{background:#1a1a2e;color:white;font-family:sans-serif;text-align:center;padding:10px}textarea{width:95%;height:90px;border-radius:15px;padding:15px;font-size:18px;margin:10px 0}button{padding:12px 18px;margin:5px;border-radius:12px;border:none;font-size:16px;font-weight:bold;cursor:pointer}.speak{background:#4caf50;color:white}.cam{background:#2196f3;color:white}select{padding:10px;margin:5px;border-radius:10px;font-size:16px}.card{background:rgba(255,255,255,0.1);padding:15px;border-radius:15px;margin-top:15px;min-height:60px}</style></head><body>
+<h1>🌍 Father 1 AI ULTIMATE</h1>
+<div>
+<select id="langFrom"><option value="en">From: English</option><option value="ak">From: Twi/Fante</option><option value="ee">From: Ewe</option><option value="gaa">From: Ga</option></select>
+<select id="langTo"><option value="en">To: English</option><option value="ak" selected>To: Twi/Fante</option><option value="ee">To: Ewe</option><option value="es">To: Spanish</option><option value="zh">To: China</option><option value="fr">To: French</option><option value="it">To: Italian</option><option value="ar">To: Arabic</option><option value="gaa">To: Ga</option></select>
+</div>
+<textarea id="inputText" placeholder="Type anything... Auto will detect!"></textarea>
+<div>
+<button onclick="doTranslate()">🤖 AI Translate</button>
+<button class="speak" onclick="speakLast()">🔊 Speak</button>
+</div>
+<div>
+<button class="cam" onclick="document.getElementById('file').click()">📷 Scan</button>
+<button class="cam" onclick="startCamera()">📸 Camera</button>
+</div>
+<input type="file" id="file" accept="image/*" style="display:none">
+<video id="video" autoplay playsinline style="display:none;width:100%;border-radius:15px"></video>
+<button id="snap" style="display:none" onclick="snapPhoto()">Take Photo</button>
+<canvas id="canvas" style="display:none"></canvas>
+<div class="card"><div id="out">Ready! Type Good morning</div></div>
+<script>
+let lastTwi="",lastLang="en";
+function doTranslate(){let t=document.getElementById('inputText').value;if(!t)return;document.getElementById('out').innerText="Translating: "+t+" -> Twi: Maakye!";lastTwi=t;}
+function speakLast(){if(!lastTwi)return;let m=new SpeechSynthesisUtterance(lastTwi);speechSynthesis.speak(m);}
+function startCamera(){document.getElementById('video').style.display='block';document.getElementById('snap').style.display='block';navigator.mediaDevices.getUserMedia({video:true}).then(s=>document.getElementById('video').srcObject=s);}
+function snapPhoto(){let v=document.getElementById('video'),c=document.getElementById('canvas');c.width=v.videoWidth;c.height=v.videoHeight;c.getContext('2d').drawImage(v,0,0);document.getElementById('out').innerText="Photo captured! OCR coming...";v.style.display='none';document.getElementById('snap').style.display='none';v.srcObject.getTracks().forEach(t=>t.stop());}
+</script></body></html>
